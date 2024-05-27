@@ -13,8 +13,6 @@ on:
         type: boolean
         default: false
         required: false
-  schedule:
-    - cron: '42 13 * * *'
 
 env:
   DOCKER_BUILDKIT: 1
@@ -27,7 +25,7 @@ jobs:
     steps:
       - name: Repo Check
         run: |
-          if [[ "$GITHUB_REPOSITORY" != "yt-dlp/FFmpeg-Builds" ]]; then
+          if [[ "$GITHUB_REPOSITORY" != "r52/FFmpeg-Builds" ]]; then
             echo "When forking this repository to make your own builds, you have to adjust this check."
             echo "When doing so make sure to randomize the scheduled cron time above, in order to spread out the various build times as much as possible."
             echo "This has been put in place due to the enormous amounts of traffic hundreds/thousands of parallel builds can cause on external infrastructure."
@@ -106,7 +104,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win32,win64,winarm64,linux64,linuxarm64]
+        target: [win64]
     steps:
       - name: Free Disk-Space
         run: df -h && sudo apt-get clean && docker system prune -a -f && sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc && df -h
@@ -161,7 +159,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win32,win64,winarm64]
+        target: [win64]
         variant: [gpl,gpl 7.0,gpl-shared,gpl-shared 7.0]
         include:
           - target: linux64
@@ -235,7 +233,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win32,win64,winarm64]
+        target: [win64]
         variant: [gpl,gpl 7.0,gpl-shared,gpl-shared 7.0]
         include:
           - target: linux64
